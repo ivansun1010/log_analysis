@@ -34,7 +34,8 @@ public class InfoBolt extends BaseBasicBolt {
         List<Object> list = tuple.getValues();
 
         String date = (String) list.get(0);
-        String curDate = date.replaceAll("-", "").replaceAll(" ", "").replaceAll(":", "");
+        String curDateTime = date.replaceAll("-", "").replaceAll(" ", "").replaceAll(":", "");
+        String curDate = date.substring(0, 10);
         Long curDateL = null;
         try {
             curDateL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").parse(date).getTime();
@@ -54,15 +55,23 @@ public class InfoBolt extends BaseBasicBolt {
                 String useTime = m.group(2);
                 String userId = m.group(3);
                 Long durationTime = dateUtils.durationTime(useTime);
-                Long logInfoNo = jedis.incr("INFO:num");
-                Long userVisitTime = jedis.incr("user:visitTime." + userId + "." + curDate);
-                Long countFunction = jedis.incr("function:" + functionName);//功能点访问次数
-                jedis.zadd("functionList:" + functionName, durationTime, userId);//功能点访问列表
-                Long countUserfunc = jedis.incr("user.func:" + userId + "." + functionName + "." + curDate);//用户访问次数
-                jedis.zadd("functionTime:" + functionName + "." + curDate, durationTime, message);//方法耗时
+                //日志信息记录
+                Long logInfoNo = jedis.incr("INFO:num." + curDate);//日志总数
+                jedis.set("INFO:content." + curDate + "." + logInfoNo, date + " " + className + " " + message);//INFO日志内容
+                jedis.zadd("INFO:infoTime." + curDate, curDateL, logInfoNo.toString());//日志按时间排序
+                //user信息记录
+                Long userVisitTime = jedis.incr("user:visitTime." + curDate + "." + userId);//用户当天登录次数
+                jedis.sadd("user:visitTimeSet." + curDate + "." + userId, curDateL.toString());//用户每天访问时间列表
+                jedis.zadd("user:visitInfo." + curDate, curDateL, logInfoNo.toString());//用户访问日志信息
+                Long countUserfunc = jedis.incr("user:func." + curDate + "." + userId + "." + functionName);//用户访问方法次数
+                jedis.sadd("user:func." + curDate + "." + userId + "." + functionName,curDateL.toString());//用户访问方法次数
+                //function信息记录
+                Long countFunction = jedis.incr("function:" + curDate + "." + functionName);//功能点访问次数
+                jedis.zadd("functionList:" + curDate + "." + functionName, durationTime, userId);//功能点访问列表
+                jedis.zadd("functionTime:" + functionName + "." + curDateTime, durationTime, message);//方法耗时
+                //pv
                 jedis.incr("pv:" + curDate);
-                jedis.set("INFO:" + logInfoNo, date + " " + className + " " + message);//INFO日志内容
-                jedis.zadd("user:visitInfo", curDateL, message);
+                //uv
                 if (userVisitTime.equals(1)) {
                     jedis.incr("uv:" + curDate);
                 }
