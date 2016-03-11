@@ -30,7 +30,7 @@ public class LogErrorController {
     @RequestMapping(value = "/getNum", method = RequestMethod.GET)
     @ResponseBody
     public String num() {
-        return logErrorService.getLogErrorByDateRange();
+        return logErrorService.getErrorLogNum("20160202");
     }
 
 }

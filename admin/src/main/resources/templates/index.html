@@ -1,0 +1,160 @@
+<#assign ctx="${request.contextPath}" />
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+
+<script type="application/javascript">
+    $(function () {
+        $.ajax({
+            url: "${ctx}/homepage/pvtotal",
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                // Create the chart
+                $('#container').highcharts('StockChart', {
+                    rangeSelector: {
+                        selected: 1
+                    },
+                    title: {
+                        text: 'AAPL Stock Price'
+                    },
+                    series: [{
+                        name: 'AAPL',
+                        data: data,
+                        tooltip: {
+                            valueDecimals: 2
+                        }
+                    }]
+                });
+            }
+        });
+    })
+    $.ajax({
+        url: "${ctx}/homepage/uvtotal",
+        type: "get",
+        dataType: "json",
+        success: function (data) {
+            // Create the chart
+            $('#container1').highcharts('StockChart', {
+                rangeSelector: {
+                    selected: 1
+                },
+                title: {
+                    text: 'AAPL Stock Price'
+                },
+                series: [{
+                    name: 'AAPL',
+                    data: data,
+                    tooltip: {
+                        valueDecimals: 2
+                    }
+                }]
+            });
+        }
+    });
+    $.ajax({
+        url: "${ctx}/homepage/errornum",
+        type: "get",
+        dataType: "json",
+        success: function (data) {
+            // Create the chart
+            $('#container2').highcharts('StockChart', {
+                rangeSelector: {
+                    selected: 1
+                },
+                title: {
+                    text: 'AAPL Stock Price'
+                },
+                series: [{
+                    name: 'AAPL',
+                    data: data,
+                    tooltip: {
+                        valueDecimals: 2
+                    }
+                }]
+            });
+        }
+    });
+    $(function () {
+        $('#container3').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'World\'s largest cities per 2014'
+            },
+            xAxis: {
+                type: 'category',
+                labels: {
+                    rotation: -45,
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Population (millions)'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                pointFormat: 'Population in 2008: <b>{point.y:.1f} millions</b>'
+            },
+            series: [{
+                name: 'Population',
+                data: [
+                    ['Shanghai', 23.7],
+                    ['Lagos', 16.1],
+                    ['Istanbul', 14.2],
+                    ['Karachi', 14.0],
+                    ['Mumbai', 12.5],
+                    ['Moscow', 12.1],
+                    ['São Paulo', 11.8],
+                    ['Beijing', 11.7],
+                    ['Guangzhou', 11.1],
+                    ['Delhi', 11.1],
+                    ['Shenzhen', 10.5],
+                    ['Seoul', 10.4],
+                    ['Jakarta', 10.0],
+                    ['Kinshasa', 9.3],
+                    ['Tianjin', 9.3],
+                    ['Tokyo', 9.0],
+                    ['Cairo', 8.9],
+                    ['Dhaka', 8.9],
+                    ['Mexico City', 8.9],
+                    ['Lima', 8.9]
+                ],
+                dataLabels: {
+                    enabled: true,
+                    rotation: -90,
+                    color: '#FFFFFF',
+                    align: 'right',
+                    format: '{point.y:.1f}', // one decimal
+                    y: 10, // 10 pixels down from the top
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            }]
+        });
+    });
+</script>
+<div id="container" style="min-width:400px;height:400px"></div>
+<div id="container1" style="min-width:400px;height:400px"></div>
+<div id="container2" style="min-width:400px;height:400px"></div>
+<div id="container3" style="min-width:400px;height:400px"></div>
+</body>
+</html>

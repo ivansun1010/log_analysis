@@ -1,15 +1,17 @@
 <#assign ctx="${request.contextPath}" />
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <title>Title</title>
 </head>
+
 <body>
 <div id="test"></div>
-<script type="application/javascript" src="${ctx}/js/jquery-1.12.1.min.js"></script>
+<#include "../header.html"/>
 <script type="application/javascript">
-    $(document).ready(function () {
+    $(function () {
         $.ajax({
             url: "${ctx}/error/getNum",
             type: "get",

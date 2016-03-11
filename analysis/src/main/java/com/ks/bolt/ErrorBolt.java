@@ -58,9 +58,9 @@ public class ErrorBolt extends BaseBasicBolt {
                     Long countErrFunc = jedis.sadd("ERROR:function." + curDate + "." + functionName, errorInfoNo.toString());
                     Long userVisitTime = jedis.incr("user:visitTime." + curDate + "." + userId);
                     jedis.set("ERROR:content." + curDate + "." + errorInfoNo, date + " " + className + " " + message);//ERROR日志内容
-                    jedis.incr("pv:" + curDate);
+                    jedis.incr("pv:num." + curDate);
                     jedis.zadd("user:visitError." + curDate, curDateL, errorInfoNo.toString());
-                    if (userVisitTime.equals(1)) {
+                    if (userVisitTime == 1) {
                         jedis.incr("uv:" + curDate);
                     }
                 }
