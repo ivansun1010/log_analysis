@@ -22,34 +22,36 @@ public class SplitLogBolt extends BaseBasicBolt {
 
     @Override
     public void execute(Tuple tuple, BasicOutputCollector collector) {
-        String data = tuple.getString(0);
-
-
-        if (data != null && data.length() > 0) {
-            String ragex = "(.*?)\\[(.*?)\\]\\[(.*?)\\]\\[(.*?)\\] - (.*)";
-            Pattern p = Pattern.compile(ragex);
-            Matcher m = p.matcher(data);
-            if (m.find()) {
-                String date = m.group(1);
-                String level = m.group(2);
-                String className = m.group(3);
-                String threadId = m.group(4);
-                String message = m.group(5);
-                if (level.equals("ERROR")) {
-                    collector.emit("ERROR",new Values(date, level, className, threadId, message));
-                }
-                if (level.equals("INFO ")) {
-                    collector.emit("INFO ",new Values(date, level, className, threadId, message));
+        try {
+            String data = tuple.getString(0);
+            if (data != null && data.length() > 0) {
+                String ragex = "(.*?)\\[(.*?)\\]\\[(.*?)\\]\\[(.*?)\\] - (.*)";
+                Pattern p = Pattern.compile(ragex);
+                Matcher m = p.matcher(data);
+                if (m.find()) {
+                    String date = m.group(1);
+                    String level = m.group(2);
+                    String className = m.group(3);
+                    String threadId = m.group(4);
+                    String message = m.group(5);
+                    if (level.equals("ERROR")) {
+                        collector.emit("ERROR", new Values(date, level, className, threadId, message));
+                    }
+                    if (level.equals("INFO ")) {
+                        collector.emit("INFO ", new Values(date, level, className, threadId, message));
+                    }
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     @Override
     public void declareOutputFields(OutputFieldsDeclarer declarer) {
         Fields fields = new Fields("date", "level", "className", "threadId", "message");
-        declarer.declareStream("ERROR",fields );
-        declarer.declareStream("INFO ",fields );
+        declarer.declareStream("ERROR", fields);
+        declarer.declareStream("INFO ", fields);
     }
 
     public static void main(String[] args) {
