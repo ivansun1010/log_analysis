@@ -21,8 +21,8 @@ public class DataFormatUtil {
     public String ZSetToJson(String key, String dateFormat, String splitBy, RedisTemplate<String, String> template) {
         Set<String> set = template.keys(key + "*");
         Iterator<String> it = set.iterator();
-        StringBuilder result = new StringBuilder();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
+        StringBuilder result = new StringBuilder();
         result.append("[");
         List<String> list = new ArrayList<String>();
         while (it.hasNext()) {

@@ -51,7 +51,6 @@ public class InfoBolt extends BaseBasicBolt {
                 String ragex = "方法名:(.*?),消耗时间:(.*?),传入参数:(.*?),返回数据:(.*)";
                 Pattern p = Pattern.compile(ragex);
                 Matcher m = p.matcher(message);
-                LOG.info("123123123123");
                 if (m.find()) {
                     String functionName = className + "." + m.group(1);
                     String useTime = m.group(2);
