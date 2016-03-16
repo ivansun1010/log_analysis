@@ -53,5 +53,10 @@ public class LogFunctionService {
         }
         return infoEntities;
     }
+
+    public List<InfoEntity> getLogFunctionUseTimeByDurDate(String begin,String end) {
+        List<InfoEntity> infoEntities = new ArrayList<InfoEntity>();
+        return infoEntities;
+    }
 }
 

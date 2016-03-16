@@ -40,7 +40,7 @@ public class LogUserService {
 
     public String getUV(){
         DataFormatUtil dataFormatUtil = new DataFormatUtil();
-        return dataFormatUtil.ZSetToJson("uv:num.","yyyyMMdd","\\.",template);
+        return dataFormatUtil.ZSetToJson("uv:","yyyyMMdd",":",template);
     }
 
     public String getUserVisitTimeByDate(String date, String userId) {

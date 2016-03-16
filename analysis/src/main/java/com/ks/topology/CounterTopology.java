@@ -21,15 +21,15 @@ public class CounterTopology {
 		try{
 			String kafkaZookeeper = "server1:2181,server2:2181,server3:2181";
 			BrokerHosts brokerHosts = new ZkHosts(kafkaZookeeper);
-			SpoutConfig kafkaConfig = new SpoutConfig(brokerHosts, "logstormtest", "/logstormtest", "id");
+			SpoutConfig kafkaConfig = new SpoutConfig(brokerHosts, "log", "/logstormtest", "id");
 	        kafkaConfig.scheme = new SchemeAsMultiScheme(new StringScheme());
 	        kafkaConfig.zkServers =  ImmutableList.of("server1","server2","server3");
 	        kafkaConfig.zkPort = 2181;
-			
+
 	        //kafkaConfig.forceFromStart = true;
 			
 	        TopologyBuilder builder = new TopologyBuilder();
-	        builder.setSpout("spout", new KafkaSpout(kafkaConfig), 2);
+	        builder.setSpout("spout", new KafkaSpout(kafkaConfig), 1);
 	        builder.setBolt("split", new SplitLogBolt(),1).shuffleGrouping("spout");
 			builder.setBolt("error",new ErrorBolt(),1).fieldsGrouping("split","ERROR",new Fields("date", "level", "className", "threadId", "message"));
 			builder.setBolt("info",new InfoBolt(),1).fieldsGrouping("split","INFO ",new Fields("date", "level", "className", "threadId", "message"));

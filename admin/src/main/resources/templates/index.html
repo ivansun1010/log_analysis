@@ -6,10 +6,7 @@
     <title>Title</title>
 </head>
 <body>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script src="https://code.highcharts.com/stock/highstock.js"></script>
-<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
-
+<#include "/header.html"/>
 <script type="application/javascript">
     $(function () {
         $.ajax({
@@ -23,7 +20,7 @@
                         selected: 1
                     },
                     title: {
-                        text: 'AAPL Stock Price'
+                        text: 'PV Number'
                     },
                     series: [{
                         name: 'AAPL',
@@ -47,7 +44,7 @@
                     selected: 1
                 },
                 title: {
-                    text: 'AAPL Stock Price'
+                    text: 'UV Number'
                 },
                 series: [{
                     name: 'AAPL',
@@ -70,7 +67,7 @@
                     selected: 1
                 },
                 title: {
-                    text: 'AAPL Stock Price'
+                    text: 'Error Num'
                 },
                 series: [{
                     name: 'AAPL',
@@ -83,72 +80,58 @@
         }
     });
     $(function () {
-        $('#container3').highcharts({
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'World\'s largest cities per 2014'
-            },
-            xAxis: {
-                type: 'category',
-                labels: {
-                    rotation: -45,
-                    style: {
-                        fontSize: '13px',
-                        fontFamily: 'Verdana, sans-serif'
-                    }
-                }
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Population (millions)'
-                }
-            },
-            legend: {
-                enabled: false
-            },
-            tooltip: {
-                pointFormat: 'Population in 2008: <b>{point.y:.1f} millions</b>'
-            },
-            series: [{
-                name: 'Population',
-                data: [
-                    ['Shanghai', 23.7],
-                    ['Lagos', 16.1],
-                    ['Istanbul', 14.2],
-                    ['Karachi', 14.0],
-                    ['Mumbai', 12.5],
-                    ['Moscow', 12.1],
-                    ['São Paulo', 11.8],
-                    ['Beijing', 11.7],
-                    ['Guangzhou', 11.1],
-                    ['Delhi', 11.1],
-                    ['Shenzhen', 10.5],
-                    ['Seoul', 10.4],
-                    ['Jakarta', 10.0],
-                    ['Kinshasa', 9.3],
-                    ['Tianjin', 9.3],
-                    ['Tokyo', 9.0],
-                    ['Cairo', 8.9],
-                    ['Dhaka', 8.9],
-                    ['Mexico City', 8.9],
-                    ['Lima', 8.9]
-                ],
-                dataLabels: {
-                    enabled: true,
-                    rotation: -90,
-                    color: '#FFFFFF',
-                    align: 'right',
-                    format: '{point.y:.1f}', // one decimal
-                    y: 10, // 10 pixels down from the top
-                    style: {
-                        fontSize: '13px',
-                        fontFamily: 'Verdana, sans-serif'
-                    }
-                }
-            }]
+        $.ajax({
+            url: "${ctx}/homepage/errornum",
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                $('#container3').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'UseTime List'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        labels: {
+                            rotation: -45,
+                            style: {
+                                fontSize: '13px',
+                                fontFamily: 'Verdana, sans-serif'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Population (millions)'
+                        }
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    tooltip: {
+                        pointFormat: 'Population in 2008: <b>{point.y:.1f} millions</b>'
+                    },
+                    series: [{
+                        name: 'Population',
+                        data: data,
+                        dataLabels: {
+                            enabled: true,
+                            rotation: -90,
+                            color: '#FFFFFF',
+                            align: 'right',
+                            format: '{point.y:.1f}', // one decimal
+                            y: 10, // 10 pixels down from the top
+                            style: {
+                                fontSize: '13px',
+                                fontFamily: 'Verdana, sans-serif'
+                            }
+                        }
+                    }]
+                });
+            }
         });
     });
 </script>
