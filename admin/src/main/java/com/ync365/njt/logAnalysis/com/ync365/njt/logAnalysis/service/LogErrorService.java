@@ -39,8 +39,7 @@ public class LogErrorService {
     }
 
     public String getLogErrorNum(){
-        DataFormatUtil dataFormatUtil = new DataFormatUtil();
-        return dataFormatUtil.ZSetToJson("ERROR:num.","yyyyMMdd","\\.",template);
+        return DataFormatUtil.ZSetToJson("ERROR:num.","yyyyMMdd","\\.",template);
     }
 
     public String getErrorLogContent(String date, String no) {

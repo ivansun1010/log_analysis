@@ -18,7 +18,7 @@ public class DataFormatUtil {
     private static final Logger logger = LoggerFactory.getLogger(DataFormatUtil.class);
 
 
-    public String ZSetToJson(String key, String dateFormat, String splitBy, RedisTemplate<String, String> template) {
+    public static String ZSetToJson(String key, String dateFormat, String splitBy, RedisTemplate<String, String> template) {
         Set<String> set = template.keys(key + "*");
         Iterator<String> it = set.iterator();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);

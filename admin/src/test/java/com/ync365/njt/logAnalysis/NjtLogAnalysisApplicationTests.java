@@ -21,7 +21,7 @@ public class NjtLogAnalysisApplicationTests {
 
 	@Test
 	public void test() {
-
+		logInfoService.test();
 	}
 
 }

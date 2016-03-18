@@ -39,7 +39,7 @@ public class DateUtils {
 		return null;
 	}
 
-	public long durationTime(String sTime) {
+	public static long durationTime(String sTime) {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd H:mm:ss.SSS");
 		try {
 			Date startDate = simpleDateFormat.parse("19700101 "+sTime);
