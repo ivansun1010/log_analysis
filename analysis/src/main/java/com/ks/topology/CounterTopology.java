@@ -34,7 +34,7 @@ public class CounterTopology {
 
 	        Config config = new Config();
 	        config.setDebug(true);
-	        
+	        config.setNumAckers(0);
 	        if(args!=null && args.length > 0) {
 				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 				config.setNumWorkers(2);
