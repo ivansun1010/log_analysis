@@ -2,9 +2,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-    <title>Title</title>
-</head>
 <body>
 <#include "/header.html"/>
 <script type="application/javascript">
@@ -189,10 +186,15 @@
         });
     });
 </script>
-<div id="container" style="min-width:400px;height:400px"></div>
-<div id="container1" style="min-width:400px;height:400px"></div>
-<div id="container2" style="min-width:400px;height:400px"></div>
-<div id="container3" style="min-width:400px;height:400px"></div>
-<div id="container4" style="min-width:400px;height:400px"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div id="container" class="col-lg-6"></div>
+        <div id="container1" class="col-lg-6"></div>
+        <div id="container2" class="col-lg-6"></div>
+        <div id="container3" class="col-lg-6"></div>
+        <div id="container4" class="col-lg-6"></div>
+    </div>
+</div>
+
 </body>
 </html>

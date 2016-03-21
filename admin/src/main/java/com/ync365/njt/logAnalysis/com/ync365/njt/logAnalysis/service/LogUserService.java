@@ -79,5 +79,18 @@ public class LogUserService {
         return infoEntities;
     }
 
-
+    public String getUserDateVisitTime(String date){
+        Set<ZSetOperations.TypedTuple<String>> set = template.opsForZSet().reverseRangeWithScores("user:dateVisitTime." + date, 0, 20);
+        Iterator<ZSetOperations.TypedTuple<String>> it = set.iterator();
+        StringBuilder result = new StringBuilder();
+        result.append("[");
+        while (it.hasNext()) {
+            ZSetOperations.TypedTuple<String> typedTuple = it.next();
+            result.append("[\"").append(typedTuple.getValue()).append("\",");
+            result.append(typedTuple.getScore()).append("],");
+        }
+        result.delete(result.length() - 1, result.length());
+        result.append("]");
+        return result.toString();
+    }
 }
