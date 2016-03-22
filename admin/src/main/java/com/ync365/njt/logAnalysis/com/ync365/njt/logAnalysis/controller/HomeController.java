@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,7 +38,9 @@ public class HomeController {
     private LogFunctionService logFunctionService;
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String getIndex() {
+    public String getIndex(Model model)
+    {
+        model.addAttribute("index","home");
         return "/home/home";
     }
 
@@ -67,13 +70,13 @@ public class HomeController {
     @ResponseBody
     public String getFunctionTime(){
         String date = new SimpleDateFormat("yyyyMMdd").format(new Date());
-        return logFunctionService.getLogFunctionUseTimeByDate("20160126");
+        return logFunctionService.getLogFunctionUseTimeByDate("20160128");
     }
     @RequestMapping(value="/functionvisitnum",method = RequestMethod.GET)
     @ResponseBody
     public String getFunctionvisitnum() {
         String date = new SimpleDateFormat("yyyyMMdd").format(new Date());
-        return logFunctionService.getLogFunctionByDate("20160126");
+        return logFunctionService.getLogFunctionByDate("20160128");
     }
 }
 

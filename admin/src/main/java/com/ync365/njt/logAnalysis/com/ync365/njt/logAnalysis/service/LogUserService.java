@@ -9,10 +9,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by ivan on 16/3/10.
@@ -88,6 +86,26 @@ public class LogUserService {
             ZSetOperations.TypedTuple<String> typedTuple = it.next();
             result.append("[\"").append(typedTuple.getValue()).append("\",");
             result.append(typedTuple.getScore()).append("],");
+        }
+        result.delete(result.length() - 1, result.length());
+        result.append("]");
+        return result.toString();
+    }
+
+    public String getUserVisitTimeSet(String date){
+        Set<ZSetOperations.TypedTuple<String>> set = template.opsForZSet().rangeWithScores("user:visitTimeSet." + date, 0, -1);
+        Iterator<ZSetOperations.TypedTuple<String>> it = set.iterator();
+        StringBuilder result = new StringBuilder();
+        Map<String,Integer> map = new HashMap<String, Integer>();
+        result.append("[");
+        while (it.hasNext()) {
+            ZSetOperations.TypedTuple<String> typedTuple = it.next();
+            map.put(new SimpleDateFormat("HH").format(new Date(Long.parseLong(typedTuple.getValue()))),typedTuple.getScore().intValue());
+        }
+        for (int i = 0;i<25;i++) {
+            int num = map.get(String.valueOf(i))==null?0:map.get(String.valueOf(i));
+            result.append("[\"").append(i).append("\",");
+            result.append(num).append("],");
         }
         result.delete(result.length() - 1, result.length());
         result.append("]");

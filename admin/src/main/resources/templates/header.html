@@ -10,33 +10,23 @@
 <script type="text/javascript">
 
     $(document).ready(function(){
-
-
-        var currentPath = "<%=path%>";
-        $('#nav > li').each(function(index, element) {
-            $(element).removeClass('active');
-        });
-        if(currentPath == "tohomepage"){
-            $("#tohomepage").addClass("active");
-        } else if (currentPath == "project" || currentPath == "tag"){
-            $("#project").addClass("active");
-        } else if (currentPath == "score"){
-            $("#score").addClass("active");
-        } else if (currentPath == "teacherouter" || currentPath == "teacherindetail" || currentPath == "teacherinsum"){
-            $("#teacherouter").addClass("active");
+        if("${index}"=="home") {
+            $("#home").addClass("active");
         }
-
+        if("${index}"=="user") {
+            $("#user").addClass("active");
+        }
     });
 </script>
 </body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Brand</a></div>
+            <a class="navbar-brand" href="${ctx}/homepage/home">Brand</a></div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
             <ul class="nav navbar-nav">
-                <li class="active" onclick="change(this)"><a href="${ctx}/homepage/home">首页</a></li>
-                <li onclick="change(this)"><a href="${ctx}/user/userhome">用户</a></li>
+                <li id="home"><a href="${ctx}/homepage/home">首页</a></li>
+                <li id="user"><a href="${ctx}/user/userhome">用户</a></li>
             </ul>
         </div>
     </div>

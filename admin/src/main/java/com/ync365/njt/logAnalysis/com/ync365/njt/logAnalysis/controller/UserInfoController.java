@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,14 +21,20 @@ public class UserInfoController {
     private LogUserService logUserService;
 
     @RequestMapping(value = "/userhome")
-    public String getUserHome() {
+    public String getUserHome(Model model) {
+        model.addAttribute("index","user");
         return "user/userhome";
     }
 
     @RequestMapping(value = "/userdatevisittime")
     @ResponseBody
-    public String getuserDateVisitTime(){
-        return logUserService.getUserDateVisitTime("20160126");
+    public String getuserDateVisitTime() {
+        return logUserService.getUserDateVisitTime("20160128");
+
+    } @RequestMapping(value = "/uservisittimeset")
+    @ResponseBody
+    public String getUserVisitTimeSet() {
+        return logUserService.getUserVisitTimeSet("20160128");
     }
 
 }
