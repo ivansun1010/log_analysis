@@ -36,9 +36,9 @@ public class HomeController {
     @Autowired
     private LogFunctionService logFunctionService;
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String getIndex() {
-        return "index";
+        return "/home/home";
     }
 
     @RequestMapping(value = "/index1", method = RequestMethod.GET)

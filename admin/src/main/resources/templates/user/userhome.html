@@ -5,6 +5,69 @@
     <title>Title</title>
 </head>
 <body>
-
+<#include "/header.html"/>
+<script type="application/javascript">
+    $(function () {
+        $.ajax({
+            url: "${ctx}/user/userdatevisittime",
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                $('#container4').highcharts({
+                    chart: {
+                        type: 'column',
+                        events:{
+                            click:function(e) {
+                                alert(1);
+                            }
+                        }
+                    },
+                    title: {
+                        text: 'UseVisitTime List'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        labels: {
+                            rotation: -45,
+                            style: {
+                                fontSize: '13px',
+                                fontFamily: 'Verdana, sans-serif'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Population (millions)'
+                        }
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    tooltip: {
+                        pointFormat: 'Population in 2008: <b>{point.y:.1f}</b>'
+                    },
+                    series: [{
+                        name: 'Population',
+                        data: data,
+                        dataLabels: {
+                            enabled: true,
+                            rotation: -90,
+                            color: '#FFFFFF',
+                            align: 'right',
+                            format: '{point.y:.1f}', // one decimal
+                            y: 10, // 10 pixels down from the top
+                            style: {
+                                fontSize: '13px',
+                                fontFamily: 'Verdana, sans-serif'
+                            }
+                        }
+                    }]
+                });
+            }
+        });
+    });
+</script>
+<div id="container4" class="col-lg-6"></div>
 </body>
 </html>

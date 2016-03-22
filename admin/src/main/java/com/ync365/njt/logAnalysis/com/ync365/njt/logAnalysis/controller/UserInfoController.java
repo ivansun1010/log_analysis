@@ -27,7 +27,7 @@ public class UserInfoController {
     @RequestMapping(value = "/userdatevisittime")
     @ResponseBody
     public String getuserDateVisitTime(){
-        return logUserService.getUserDateVisitTime("20160225");
+        return logUserService.getUserDateVisitTime("20160126");
     }
 
 }
